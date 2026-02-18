@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-toppers-coaching-class-management-system-2024'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['toppers-coaching-class-management-system.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
