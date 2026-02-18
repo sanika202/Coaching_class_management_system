@@ -153,6 +153,8 @@ def update_student_profile(request):
             student_profile.profile_update_status = 'pending'
             student_profile.save()
             form.save_m2m()
+        else:
+            print(form.errors)
             
         # Create notification for admin
         admin = CustomUser.objects.filter(role='admin').first()
