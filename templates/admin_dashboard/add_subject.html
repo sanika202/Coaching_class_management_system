@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Add Subject{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-book"></i> Add Subject
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Django Messages -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Non-field errors -->
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors.0 }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Subject Name -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Subject Name</label>
+                            {{ form.name }}
+
+                            {% if form.name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'manage_subjects' %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </a>
+
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Save Subject
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+

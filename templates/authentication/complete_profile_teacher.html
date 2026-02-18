@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Complete Teacher Profile - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0"><i class="fas fa-user-check"></i> Complete Your Profile</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Employee ID</label>
+                            <input type="text" name="employee_id" class="form-control" value="{{ form.instance.employee_id }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Qualifications</label>
+                            <textarea name="qualifications" class="form-control" rows="3" required>{{ form.instance.qualifications }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                          <label class="form-label">Subjects Taught</label>
+                          <div class="row">
+                               {% for checkbox in form.subjects_taught %}
+                                   <div class="col-md-4 col-sm-6">
+                                      <div class="form-check">
+                                          {{ checkbox.tag }}
+                                          <label class="form-check-label">
+                                              {{ checkbox.choice_label }}
+                                          </label>
+                                      </div>
+                                 </div>
+                             {% endfor %}
+                          </div>
+                       </div>                
+                        <div class="mb-3">
+                            <label class="form-label">Experience (Years)</label>
+                            <input type="number" name="experience" class="form-control" value="{{ form.instance.experience }}" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-check"></i> Complete Profile
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

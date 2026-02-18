@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile Updates - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2><i class="fas fa-file-check"></i> Pending Profile Updates</h2>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="student-tab" data-bs-toggle="tab" data-bs-target="#student-updates">
+                Student Updates
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="teacher-tab" data-bs-toggle="tab" data-bs-target="#teacher-updates">
+                Teacher Updates
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="student-updates">
+            {% if pending_student_updates %}
+                {% for profile in pending_student_updates %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">{{ profile.user.get_full_name }}</h5>
+                                <p class="card-text">
+                                    <strong>Enrollment:</strong> {{ profile.enrollment_number }}<br>
+                                    <strong>Guardian:</strong> {{ profile.guardian_name }}<br>
+                                    <strong>Batch:</strong> {{ profile.batch }}
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <a href="{% url 'approve_student_profile_update' profile.id %}" class="btn btn-success btn-sm">
+                                    <i class="fas fa-check"></i> Approve
+                                </a>
+                                <a href="{% url 'reject_student_profile_update' profile.id %}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-times"></i> Reject
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="alert alert-info">No pending student profile updates</div>
+            {% endif %}
+        </div>
+
+        <div class="tab-pane fade" id="teacher-updates">
+            {% if pending_teacher_updates %}
+                {% for profile in pending_teacher_updates %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">{{ profile.user.get_full_name }}</h5>
+                                <p class="card-text">
+                                    <strong>Employee ID:</strong> {{ profile.employee_id }}<br>
+                                    <strong>Experience:</strong> {{ profile.experience }} years<br>
+                                    <strong>Qualifications:</strong> {{ profile.qualifications|truncatewords:10 }}
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <a href="{% url 'approve_teacher_profile_update' profile.id %}" class="btn btn-success btn-sm">
+                                    <i class="fas fa-check"></i> Approve </a>
+                                <a href="{% url 'reject_teacher_profile_update' profile.id %}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-times"></i> Reject </a>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="alert alert-info">No pending teacher profile updates</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

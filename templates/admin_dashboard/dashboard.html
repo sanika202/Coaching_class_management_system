@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="mb-0"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h2>
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <a href="{% url 'all_students' %}" class="text-decoration-none">
+            <div class="card dashboard-stat">
+                <div class="stat-number" style="color: #17a2b8;">{{ total_students }}</div>
+                <div class="stat-label"><i class="fas fa-user-graduate"></i> Total Students</div>
+            </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'all_teachers' %}" class="text-decoration-none">
+            <div class="card dashboard-stat">
+                <div class="stat-number" style="color: #28a745;">{{ total_teachers }}</div>
+                <div class="stat-label"><i class="fas fa-chalkboard-user"></i> Total Teachers</div>
+            </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'pending_registrations' %}" class="text-decoration-none">
+            <div class="card dashboard-stat">
+                <div class="stat-number" style="color: #ffc107;">{{ pending_approvals }}</div>
+                <div class="stat-label"><i class="fas fa-clock"></i> Pending Approvals</div>
+            </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-stat">
+                <div class="stat-number" style="color: #dc3545;">{{ unread_count }}</div>
+                <div class="stat-label"><i class="fas fa-bell"></i> Unread Notifications</div>
+            </div>
+        
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'manage_timetable' %}" class="text-decoration-none">
+            <div class="card dashboard-stat">
+                <div class="stat-number" style="color: #6f42c1;"><h5>Manage_Lectures</h5></div>
+                <div class="stat-label"><i class="fas fa-calendar-alt"></i> Timetable </div>
+            </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-stat text-center" >
+                <div class="stat-number" style="color: #db0fb2;">
+                    <h5>Manage</h5>
+                </div>
+                <div class="stat-label">
+                    <i class="fas fa-book"></i> Subjects / Batches
+                </div>
+                <div class="card-body pt-2">
+                    <div class="d-grid gap-2">
+                       <a href="{% url 'manage_subjects' %}" class="btn btn-outline-primary btn-sm">
+                          <i class="fas fa-book"></i> Subjects
+                      </a>
+
+                      <a href="{% url 'manage_batches' %}" class="btn btn-outline-success btn-sm">
+                          <i class="fas fa-layer-group"></i> Batches
+                      </a>
+                    </div>
+                </div>
+           </div>
+     </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="m-0"><i class="fas fa-bolt"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'add_student' %}" class="btn btn-info me-2">
+                        <i class="fas fa-user-plus"></i> Add Student
+                    </a>
+                    <a href="{% url 'add_teacher' %}" class="btn btn-info me-2">
+                        <i class="fas fa-user-plus"></i> Add Teacher
+                    </a>
+                    <a href="{% url 'approve_profile_updates' %}" class="btn btn-primary me-2">
+                        <i class="fas fa-edit"></i> Profile Updates
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="m-0"><i class="fas fa-bell"></i> Recent Notifications</h5>
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    {% if notifications %}
+                        {% for notification in notifications %}
+                            <div class="notification-item {% if not notification.is_read %}unread{% endif %}">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1">{{ notification.title }}</h6>
+                                        <p class="mb-2" style="color: #666;">{{ notification.message }}</p>
+                                        <small style="color: #999;">
+                                            <i class="fas fa-clock"></i> {{ notification.created_at|timesince }} ago
+                                        </small>
+                                    </div>
+                                    {% if not notification.is_read %}
+                                        <a href="{% url 'mark_notification_read' notification.id %}" class="btn btn-sm btn-outline-primary">
+                                            Mark Read
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center py-4">No notifications yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

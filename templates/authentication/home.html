@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - TOPPERS Coaching Class{% endblock %}
+
+{% block content %}
+<div style="min-height: 80vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1f77d2 0%, #1560b0 100%);">
+    <div class="text-center text-white">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 1rem;">TOPPERS</h1>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem;">Coaching Class Management System</p>
+        
+        {% if not user.is_authenticated %}
+        <div>
+            <a href="{% url 'login' %}" class="btn btn-light me-2 btn-lg">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-user-plus"></i> Register
+            </a>
+        </div>
+        {% else %}
+        <div>
+            {% if user.role == 'admin' %}
+                <a href="{% url 'admin_dashboard' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-tachometer-alt"></i> Admin Dashboard
+                </a>
+            {% elif user.role == 'student' %}
+                <a href="{% url 'student_dashboard' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-book"></i> Student Dashboard
+                </a>
+            {% elif user.role == 'teacher' %}
+                <a href="{% url 'teacher_dashboard' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-chalkboard-user"></i> Teacher Dashboard
+                </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

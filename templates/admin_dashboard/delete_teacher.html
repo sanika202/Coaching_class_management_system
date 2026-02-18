@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Teacher - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger">
+                    <h3 class="m-0 text-white"><i class="fas fa-trash"></i> Delete Teacher</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-danger"><strong>⚠️ Warning: This action cannot be undone!</strong></p>
+                    <p>Are you sure you want to delete <strong>{{ teacher_user.get_full_name }}</strong> from the system?</p>
+                    
+                    <div class="bg-light p-3 rounded mb-4">
+                        <p><strong>Name:</strong> {{ teacher_user.get_full_name }}</p>
+                        <p><strong>Email:</strong> {{ teacher_user.email }}</p>
+                        <p><strong>Employee ID:</strong> {{ teacher_user.teacher_profile.employee_id }}</p>
+                        <p><strong>Experience:</strong> {{ teacher_user.teacher_profile.experience }} years</p>
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <a href="{% url 'all_teachers' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

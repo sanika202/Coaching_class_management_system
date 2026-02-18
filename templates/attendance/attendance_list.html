@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Attendance List - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4"><i class="fas fa-clipboard-list"></i> Attendance Records</h2>
+        </div>
+    </div>
+
+    {% if records %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Date</th>
+                    <th>Subject</th>
+                    <th>Batch</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.student.get_full_name }}</td>
+                    <td>{{ record.date|date:"d M Y" }}</td>
+                    <td>{{ record.lecture.subject }}</td>
+                    <td>{{ record.lecture.batch }}</td>
+                    <td>
+                        {% if record.status == 'present' %}
+                            <span class="badge bg-success"><i class="fas fa-check"></i> Present</span>
+                        {% else %}
+                            <span class="badge bg-danger"><i class="fas fa-times"></i> Absent</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> No attendance records found.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Complete Teacher Profile - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0"><i class="fas fa-check"></i> Complete Teacher Profile</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Employee ID</label>
+                            <input type="text" name="employee_id" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" name="date_of_birth" class="form-control" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Qualifications</label>
+                            <textarea name="qualifications" class="form-control" rows="3" required></textarea>
+                        </div>
+
+                       <div class="mb-3">
+                          <label class="form-label">Subjects Taught</label>
+                          <div class="row">
+                               {% for checkbox in form.subjects_taught %}
+                                   <div class="col-md-4 col-sm-6">
+                                      <div class="form-check">
+                                          {{ checkbox.tag }}
+                                          <label class="form-check-label">
+                                              {{ checkbox.choice_label }}
+                                          </label>
+                                      </div>
+                                 </div>
+                             {% endfor %}
+                          </div>
+                       </div> 
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Experience (Years)</label>
+                            <input type="number" name="experience" class="form-control" required>
+                        </div>
+                        
+                        <div class="text-end">
+                            <a href="{% url 'all_teachers' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

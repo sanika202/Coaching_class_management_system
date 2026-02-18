@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Teacher - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0"><i class="fas fa-edit"></i> Edit Teacher - {{ teacher_user.get_full_name }}</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <h5 class="mb-3">Personal Information</h5>
+                        <hr>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" name="first_name" class="form-control" value="{{ teacher_user.first_name }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" name="last_name" class="form-control" value="{{ teacher_user.last_name }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ teacher_user.email }}" required>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" name="phone" class="form-control" value="{{ teacher_user.phone }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input type="date" name="date_of_birth" class="form-control" value="{% if teacher_user.date_of_birth %}{{ teacher_user.date_of_birth|date:'Y-m-d' }}{% endif %}">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="mb-3">Professional Information</h5>
+                        <hr>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Employee ID</label>
+                            <input type="text" name="employee_id" class="form-control" value="{{ teacher_profile.employee_id }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Qualifications</label>
+                            <textarea name="qualifications" class="form-control" rows="3">{{ teacher_profile.qualifications }}</textarea>
+                        </div>
+                        
+                       <div class="mb-3">
+                          <label class="form-label">Subjects Taught</label>
+                          <div class="row">
+                               {% for checkbox in form.subjects_taught %}
+                                   <div class="col-md-4 col-sm-6">
+                                      <div class="form-check">
+                                          {{ checkbox.tag }}
+                                          <label class="form-check-label">
+                                              {{ checkbox.choice_label }}
+                                          </label>
+                                      </div>
+                                 </div>
+                             {% endfor %}
+                          </div>
+                       </div>
+                        <div class="mb-3">
+                            <label class="form-label">Experience (Years)</label>
+                            <input type="number" name="experience" class="form-control" value="{{ teacher_profile.experience }}" required>
+                        </div>
+                        
+                        <h5 class="mb-3">Salary Information</h5>
+                        <hr>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Monthly Salary (₹)</label>
+                            <input type="number" name="salary" step="0.01" class="form-control" value="{{ teacher_profile.salary }}" required>
+
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Salary Paid (₹)</label>
+                            <input type="number" name="salary_paid" step="0.01" class="form-control" value="{{ teacher_profile.salary_paid }}" required>
+                            
+                        </div>
+                        
+                        <div class="text-end">
+                            <a href="{% url 'all_teachers' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                    {% if form.error %}
+                        <div class="alert alert-danger mt-3">
+                            <i class="fas fa-exclamation-triangle"></i> {{from.error}}
+                        </div>
+                    {% endif %}
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

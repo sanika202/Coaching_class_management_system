@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}All Teachers - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2><i class="fas fa-chalkboard-user"></i> All Teachers</h2>
+        </div>
+        <div class="col-md-4">
+            <form method="get" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search teachers..." value="{{ search }}">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <a href="{% url 'add_teacher' %}" class="btn btn-success">
+            <i class="fas fa-user-plus"></i> Add New Teacher
+        </a>
+    </div>
+
+    {% if teachers %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Employee ID</th>
+                    <th>Email</th>
+                    <th>Experience</th>
+                    <th>Subjects</th>
+                    <th>Salary</th>
+                    <th>Paid</th>
+                    <th>Remaining</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                <tr>
+                    <td><strong>{{ teacher.get_full_name }}</strong></td>
+                    <td>{{ teacher.teacher_profile.employee_id }}</td>
+                    <td>{{ teacher.email }}</td>
+                    <td>{{ teacher.teacher_profile.experience }} years</td>
+                    <td>{{ teacher.teacher_profile.subjects_taught|truncatewords:3 }}</td>
+                    <td><span class="badge bg-success">₹{{ teacher.teacher_profile.salary }}</span></td>
+                    <td><span class="badge bg-success">₹{{ teacher.teacher_profile.salary_paid }}</span></td>
+                    <td><span class="badge bg-warning">₹{{ teacher.teacher_profile.salary_remaining }}</span></td>
+                    <td>
+                        <a href="{% url 'edit_teacher' teacher.id %}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="{% url 'delete_teacher' teacher.id %}" class="btn btn-sm btn-danger delete-btn">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> No teachers found.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

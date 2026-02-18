@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - TOPPERS Teacher Portal{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="mb-0"><i class="fas fa-chalkboard-user"></i> Teacher Dashboard</h2>
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <a href="{% url 'teacher_lectures' %}" class="card dashboard-stat text-decoration-none">
+                <div class="stat-number" style="color: #28a745;">{{ total_lectures }}</div>
+                <div class="stat-label"><i class="fas fa-calendar"></i> Total Lectures</div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'teacher_salary' %}" class="card dashboard-stat text-decoration-none">
+                <div class="stat-number" style="color: #17a2b8;">₹{{ teacher_profile.salary }}</div>
+                <div class="stat-label"><i class="fas fa-money-bill"></i> Monthly Salary</div>
+            </a>
+        </div>
+       <div class="col-md-4">
+            <a href="{% url 'teacher_profile' %}" class="card dashboard-stat text-decoration-none">
+                <div class="stat-number" style="color: #007bff;">{{ teacher_profile.experience }}</div>
+                <div class="stat-label"><i class="fas fa-briefcase"></i> Years of Experience</div>
+            </a>
+        </div>
+       <div class="col-md-4">
+            <div class="card dashboard-stat text-decoration-none">
+                <div class="stat-number" style="color: #ffc107;">{{ today_lectures.count }}</div>
+                <div class="stat-label"><i class="fas fa-graduation-cap"></i> Today's Lectures(upcoming progress)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="m-0"><i class="fas fa-bolt"></i> Quick Links</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'teacher_profile' %}" class="btn btn-primary me-2">
+                        <i class="fas fa-user"></i> My Profile
+                    </a>
+                    <a href="{% url 'teacher_lectures' %}" class="btn btn-success me-2">
+                        <i class="fas fa-calendar"></i> My Lectures
+                    </a>
+                    <a href="{% url 'teacher_salary' %}" class="btn btn-info me-2">
+                        <i class="fas fa-money-bill"></i> Salary
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+#   <!-- Upcoming Lectures -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="m-0"><i class="fas fa-calendar-alt"></i> Upcoming Lectures</h5>
+                </div>
+                <div class="card-body">
+                    {% if upcoming_lectures %}
+                    <ul class="list-group">
+                        {% for lecture in upcoming_lectures %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">{{ lecture.subject }} - {{ lecture.batch }}</h6>
+                                <small class="text-muted">{{ lecture.topic }}</small><br>
+                                <small class="text-muted"><i class="fas fa-calendar"></i> {{ lecture.day }} | <i class="fas fa-clock"></i> {{ lecture.start_time|time:"H:i" }} - {{ lecture.end_time|time:"H:i" }}</small>
+                            </div>
+                            <a href="{% url 'mark_attendance' lecture.id %}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-clipboard-check"></i> Mark Attendance 
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="alert alert-info mb-0">
+                        <i class="fas fa-info-circle"></i> No lectures scheduled for today.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

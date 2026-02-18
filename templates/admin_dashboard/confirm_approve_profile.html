@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Approval - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-success">
+                <div class="card-header bg-success">
+                    <h3 class="m-0 text-white"><i class="fas fa-check"></i> Approve Profile Update</h3>
+                </div>
+                <div class="card-body">
+                    <p>Are you sure you want to approve the profile update for <strong>{{ profile.user.get_full_name }}</strong>?</p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <a href="{% url 'approve_profile_updates' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

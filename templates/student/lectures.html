@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Lectures - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4"><i class="fas fa-calendar-alt"></i> Lectures Schedule</h2>
+        </div>
+    </div>
+
+    {% if lectures %}
+    <div class="row">
+        {% for lecture in lectures %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ lecture.subject }}</h5>
+                        <span class="badge bg-primary">{{ lecture.batch }}</span>
+                    </div>
+                    <p class="card-text text-muted">{{ lecture.topic }}</p>
+                    
+                    <p class="mb-2">
+                        <i class="fas fa-calendar"></i> <strong>{{ lecture.day }}</strong>
+                    </p>
+                    <p class="mb-2">
+                        <i class="fas fa-clock"></i> <strong>{{ lecture.start_time|time:"H:i" }} - {{ lecture.end_time|time:"H:i" }}</strong>
+                    </p>
+                    <p class="mb-0">
+                        <i class="fas fa-user"></i> <strong>{{ lecture.teacher.get_full_name }}</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> No lectures scheduled yet.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Profile - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0"><i class="fas fa-edit"></i> Update Profile</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <h5 class="mb-3">Personal Information</h5>
+                        <hr>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="text" name="phone" class="form-control" value="{{ user.phone }}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea name="address" class="form-control" rows="3">{{ user.address }}</textarea>
+                        </div>
+                        
+                        <h5 class="mb-3">Academic Information</h5>
+                        <hr>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Guardian Name</label>
+                            <input type="text" name="guardian_name" class="form-control" value="{{ student_profile.guardian_name }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Guardian Phone</label>
+                            <input type="text" name="guardian_phone" class="form-control" value="{{ student_profile.guardian_phone }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="mb-3">
+                            <label class="form-label">Batch</label>
+                                {{ form.batch }}
+                            {% if form.batch.errors %}
+                                <div class="text-danger mt-1">{{ form.batch.errors }}</div>
+                            {% endif %}
+                        </div>
+                        </div>
+                        
+                        <div class="mb-5">
+                           <label class="form-label fw-bold d-block mb-3">Subjects</label>
+                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                                {% for checkbox in form.subjects %}
+                                    <div class="col">
+                                        <div class="form-check">
+                                             {{ checkbox.tag }}
+                                            <label class="form-check-label ms-2">
+                                              {{ checkbox.choice_label }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                       </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> Your changes will be sent to admin for approval.
+                        </div>
+                        
+                        <div class="text-end">
+                            <a href="{% url 'student_dashboard' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-check"></i> Submit for Approval
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

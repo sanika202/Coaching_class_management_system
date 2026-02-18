@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Teacher Salary - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2 class="mb-4"><i class="fas fa-money-bill"></i> Salary Information</h2>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card dashboard-stat">
+                                <div class="stat-number" style="color: #28a745;">₹{{ teacher_profile.salary }}</div>
+                                <div class="stat-label"><i class="fas fa-money-bill"></i> Monthly Salary</div>
+                            </div>
+                            <div class="card dashboard-stat">
+                                <div class="stat-number text-success">₹{{ teacher_profile.salary_paid }}</div>
+                                <div class="stat-label">Salary Paid</div>
+                            </div>
+                            <div class="progress mt-3" style="height: 25px;">
+                                {% if teacher_profile.salary > 0 %}
+                                    {% widthratio teacher_profile.salary_paid teacher_profile.salary 100 as paid_percentage %}
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ paid_percentage }}%;">
+                                        {{ paid_percentage }}% Paid
+                                    </div>
+                                {% else %}
+                                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 100%">
+                                        No salary set
+                                    </div>
+                                {% endif %}
+                        </div>
+                    </div>
+
+                    <h5 class="mb-3">Salary Details</h5>
+                    <hr>
+                    
+                    <div class="bg-light p-3 rounded">
+                        <p><strong>Employee ID:</strong> {{ teacher_profile.employee_id }}</p>
+                        <p><strong>Name:</strong> {{ user.get_full_name }}</p>
+                        <p><strong>Monthly Salary:</strong> <span class="text-success">₹{{ teacher_profile.salary }}</span></p>
+                        <p><strong>Experience:</strong> {{ teacher_profile.experience }} years</p>
+                    </div>
+
+                    <div class="alert alert-info mt-4">
+                        <i class="fas fa-info-circle"></i> For salary-related queries or updates, please contact the admin.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

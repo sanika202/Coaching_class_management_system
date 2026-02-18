@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Reject Registration - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-danger">
+                    <h3 class="m-0 text-white"><i class="fas fa-times"></i> Reject Registration</h3>
+                </div>
+                <div class="card-body">
+                    <p>Are you sure you want to reject <strong>{{ user.get_full_name }}</strong> ({{ user.get_role_display }}) registration?</p>
+                    
+                    <div class="bg-light p-3 rounded mb-4">
+                        <p><strong>Name:</strong> {{ user.get_full_name }}</p>
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <p><strong>Username:</strong> {{ user.username }}</p>
+                        <p><strong>Role:</strong> {{ user.get_role_display }}</p>
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <a href="{% url 'pending_registrations' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

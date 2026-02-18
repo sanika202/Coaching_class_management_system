@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0"><i class="fas fa-user-plus"></i> Register</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" name="first_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" name="last_name" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" name="password1" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Confirm Password</label>
+                                    <input type="password" name="password2" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Register As</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" value="student" id="role_student" required>
+                                <label class="form-check-label" for="role_student">
+                                    <i class="fas fa-user-graduate"></i> Student
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" value="teacher" id="role_teacher" required>
+                                <label class="form-check-label" for="role_teacher">
+                                    <i class="fas fa-chalkboard-user"></i> Teacher
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Phone (Optional)</label>
+                            <input type="text" name="phone" class="form-control">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" name="date_of_birth" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mb-3">
+                            <i class="fas fa-user-plus"></i> Register
+                        </button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

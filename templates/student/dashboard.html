@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - TOPPERS Student Portal{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="mb-0"><i class="fas fa-book"></i> Student Dashboard</h2>
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <a href="{% url 'student_lectures' %}" class="card dashboard-stat text-decoration-none">
+                <div class="stat-number" style="color: #17a2b8;">{{ total_classes }}</div>
+                <div class="stat-label"><i class="fas fa-calendar"></i> Total Classes</div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <div class="card dashboard-stat text-decoration-none">
+                <div class="stat-number" style="color: #28a745;">{{ attendance_count }}</div>
+                <div class="stat-label"><i class="fas fa-check"></i> Classes Attended</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'student_attendance' %}" class="card dashboard-stat text-decoration-none">
+                <div class="stat-number" style="color: #dc3545;">{{ attendance_percentage|floatformat:1 }}%</div>
+                <div class="stat-label"><i class="fas fa-chart-pie"></i> Attendance %</div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'student_fees' %}" class="card dashboard-stat text-decoration-none">
+                <div class="stat-number" style="color: #ffc107;">₹{{ student_profile.fees_remaining }}</div>
+                <div class="stat-label"><i class="fas fa-money-bill"></i> Fees Due</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="m-0"><i class="fas fa-bolt"></i> Quick Links</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'student_profile' %}" class="btn btn-primary me-2">
+                        <i class="fas fa-user"></i> My Profile
+                    </a>
+                    <a href="{% url 'student_attendance' %}" class="btn btn-info me-2">
+                        <i class="fas fa-clipboard-list"></i> Attendance
+                    </a>
+                    <a href="{% url 'student_lectures' %}" class="btn btn-success me-2">
+                        <i class="fas fa-calendar"></i> Upcoming Lectures
+                    </a>
+                    <a href="{% url 'student_fees' %}" class="btn btn-warning me-2">
+                        <i class="fas fa-money-bill"></i> Fees
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Lectures -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="m-0"><i class="fas fa-calendar-alt"></i> Upcoming Lectures</h5>
+                </div>
+                <div class="card-body">
+                    {% if upcoming_lectures %}
+                        {% for lecture in upcoming_lectures %}
+                        <div class="mb-3 pb-3 border-bottom">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h6 class="mb-1">{{ lecture.subject }} - {{ lecture.batch }}</h6>
+                                    <p class="mb-1"><i class="fas fa-calendar"></i> {{ lecture.day }}</p>
+                                    <p class="mb-0"><i class="fas fa-clock"></i> {{ lecture.start_time }} - {{ lecture.end_time }}</p>
+                                    <small class="text-muted">{{ lecture.topic }}</small>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <p class="text-muted">By {{ lecture.teacher.get_full_name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center py-4">No upcoming lectures</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

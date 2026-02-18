@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Complete Student Profile - TOPPERS{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="m-0"><i class="fas fa-user-check"></i> Complete Your Profile</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            {{ form.enrollment_number.label_tag }}
+                            {{ form.enrollment_number }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.guardian_name.label_tag }}
+                            {{ form.guardian_name }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.guardian_phone.label_tag }}
+                            {{ form.guardian_phone }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.batch.label_tag }}
+                            {{ form.batch }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.subjects.label_tag }}
+                            {% for checkbox in form.subjects %}
+                                <div class="form-check">
+                                    {{ checkbox.tag }}
+                                    {{ checkbox.choice_label }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-check"></i> Complete Profile
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
