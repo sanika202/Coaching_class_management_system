@@ -30,6 +30,12 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f"{self.get_full_name()} ({self.get_role_display()})"
 
+    def save(self, *args, **kwargs):
+      if self.is_superuser:
+         self.role = 'admin'
+         super().save(*args, **kwargs)
+         self.full_clean()  # Call full_clean to trigger model validation
+
     class Meta:
         ordering = ['-created_at']
 
@@ -124,11 +130,6 @@ class Notification(models.Model):
     class Meta:
         ordering = ['-created_at']
 
-def save(self, *args, **kwargs):
-    if self.is_superuser:
-        self.role = 'admin'
-    super().save(*args, **kwargs)
-    self.full_clean()  # Call full_clean to trigger model validation
 
 #models of timetable.
 class Subject(models.Model):
