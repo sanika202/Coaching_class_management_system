@@ -64,7 +64,7 @@ class StudentProfileForm(forms.ModelForm):
     subjects = forms.ModelMultipleChoiceField(queryset=Subject.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),required=True)
     class Meta:
         model = StudentProfile
-        fields = ['enrollment_number', 'guardian_name', 'guardian_phone', 'batch', 'subjects']
+        fields = ['guardian_name', 'guardian_phone', 'batch', 'subjects']
    
 class TeacherProfileForm(forms.ModelForm):
     subjects_taught = forms.ModelMultipleChoiceField(
