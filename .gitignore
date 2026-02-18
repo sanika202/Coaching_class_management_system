@@ -2,7 +2,7 @@
 *.pyc
 __pycache__/
 *.py~
-db.sqlite3
+TOPPERS/db.sqlite3
 /media/
 /staticfiles/
 
@@ -13,7 +13,8 @@ ENV/
 
 # IDE
 .vscode/
-.idea/
+.idea/YES
+
 *.swp
 *.swo
 *~
