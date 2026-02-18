@@ -1,6 +1,6 @@
 asgiref==3.11.1
 crispy-bootstrap5==2025.6
-Django==6.0.2
+Django==5.2.11
 django-crispy-forms==2.5
 gunicorn==25.1.0
 packaging==26.0
